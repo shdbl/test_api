@@ -49,3 +49,11 @@ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 $$
 '''
 )
+
+st.title("文件上传示例")
+
+uploaded_file=st.file_uploader("选择一个 CSV 文件",type="csv")
+
+if uploaded_file is not None:
+    data=pd.read_csv(uploaded_file)
+    st.write(data)
