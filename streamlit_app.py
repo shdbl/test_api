@@ -1,111 +1,51 @@
-import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid, GridOptionsBuilder
-from st_aggrid.shared import GridUpdateMode
-
-STREAMLIT_AGGRID_URL = "https://github.com/PablocFonseca/streamlit-aggrid"
-st.set_page_config(
-    layout="centered", page_icon="🖱️", page_title="Interactive table app"
-)
-st.title("🖱️ Interactive table app")
-st.write(
-    """This app shows how you can use the [streamlit-aggrid](STREAMLIT_AGGRID_URL) 
-    Streamlit component in an interactive way so as to display additional content 
-    based on user click."""
-)
-
-
-st.write("Go ahead, click on a row in the table below!")
-
-
-def aggrid_interactive_table(df: pd.DataFrame):
-    """Creates an st-aggrid interactive table based on a dataframe.
-
-    Args:
-        df (pd.DataFrame]): Source dataframe
-
-    Returns:
-        dict: The selected row
-    """
-    options = GridOptionsBuilder.from_dataframe(
-        df, enableRowGroup=True, enableValue=True, enablePivot=True
-    )
-
-    options.configure_side_bar()
-
-    options.configure_selection("single")
-    selection = AgGrid(
-        df,
-        enable_enterprise_modules=True,
-        gridOptions=options.build(),
-        theme="light",
-        update_mode=GridUpdateMode.MODEL_CHANGED,
-        allow_unsafe_jscode=True,
-    )
-
-    return selection
-
-
-iris = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
-
-selection = aggrid_interactive_table(df=iris)
-
-if selection:
-    st.write("You selected:")
-    st.json(selection["selected_rows"])
-
-st.write("## Code")
-
-st.code(
-    '''
+import numpy as np
 import pandas as pd
-import streamlit as st
-from st_aggrid import AgGrid, GridOptionsBuilder
-from st_aggrid.shared import GridUpdateMode
+import matplotlib.pyplot as plt
 
-iris = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
+# 展示文本；文本直接使用Markdown语法
+st.markdown("# Streamlit示例")
+st.markdown("""
+            - 这是
+            - 一个
+            - 无序列表
+            """)
 
-def aggrid_interactive_table(df: pd.DataFrame):
-    """Creates an st-aggrid interactive table based on a dataframe.
-
-    Args:
-        df (pd.DataFrame]): Source dataframe
-
-    Returns:
-        dict: The selected row
-    """
-    options = GridOptionsBuilder.from_dataframe(
-        df, enableRowGroup=True, enableValue=True, enablePivot=True
-    )
-
-    options.configure_side_bar()
-
-    options.configure_selection("single")
-    selection = AgGrid(
-        df,
-        enable_enterprise_modules=True,
-        gridOptions=options.build(),
-        theme="light",
-        update_mode=GridUpdateMode.MODEL_CHANGED,
-        allow_unsafe_jscode=True,
-    )
-
-    return selection
+# 展示pandas数据框
+if st.checkbox('Show raw data'):
+    st.dataframe(pd.DataFrame([[1, 2], [3, 4]], columns=["a", "b"]))
 
 
-iris = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
+# 加入交互控件，如输入框
+number = st.number_input("Insert a number", 1)
+st.write("输入的数字是：", number)
 
-selection = aggrid_interactive_table(df=iris)
+# 展示matplotlib绘图
+fig=plt.figure(figsize=(5,number))
+arr = np.random.normal(1, 1, size=100)
+plt.hist(arr, bins=20)
+plt.title("matplotlib plot")
+st.pyplot(fig)
+st.title("Streamlit 手动刷新示例")
 
-if selection:
-    st.write("You selected:")
-    st.json(selection["selected_rows"])
-''',
-    "python",
+if st.button("刷新"):
+    st.experimental_rerun()
+
+#
+st.title('Streamlit 数学公式示例')
+
+st.markdown(
+    r'''
+MathJax 可以帮助我们渲染数学公式。 下面是一个公式的例子:
+
+$$
+f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi
+$$
+
+你还可以使用行内公式，例如当 $a \ne 0$ 时，二次方程 $ax^2 + bx + c = 0$ 的解为：
+
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+'''
 )
