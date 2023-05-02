@@ -44,8 +44,11 @@ def shibie(s):
     new_message = [remove_bracket_characters(s)]
     new_message_transformed = vectorizer.transform(new_message)
     probability = clf.predict_proba(new_message_transformed)[0]
+    s=''
     for i in range(len(unique_speakers)):
-        print(unique_speakers[i] + ':'+'{:.2f}%'.format(100*probability[i]))
+        s+=unique_speakers[i] + ':'+'{:.2f}%'.format(100*probability[i])+'\n\n'
+    return s
+
 
 
 st.title("发言者检测")
