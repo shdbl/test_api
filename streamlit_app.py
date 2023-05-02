@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('./处理后的聊天记录.txt', sep='\t', header=None, names=['sender', 'message'])
+df = pd.read_csv('./ltjl.txt', sep='\t', header=None, names=['sender', 'message'])
 
 from sklearn.feature_extraction.text import CountVectorizer
 import jieba
