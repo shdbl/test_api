@@ -9,12 +9,12 @@ def generate_text(prompt):
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
-        max_tokens=100,  # 调整此数值以生成不同长度的文本
+        max_tokens=1000,  # 调整此数值以生成不同长度的文本
         n=1,
         temperature=0.5,
     )
     return response.choices[0].text.strip()
 
-prompt = "Translate the following English text to French: '"
+prompt = st.text_input("请输入一句话:")
 generated_text = generate_text(prompt)
 st.write(generated_text)
