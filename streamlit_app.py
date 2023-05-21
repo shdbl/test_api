@@ -7,11 +7,12 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 st.write("wait")
 def generate_text(prompt):
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1000,  # 调整此数值以生成不同长度的文本
         n=1,
-        temperature=0.5,
+        temperature=1,
+        echo=True
     )
     return response.choices[0].text.strip()
 
