@@ -1,9 +1,10 @@
 import openai
 import os
+import streamlit as st
 
 # 设置 API 密钥
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+st.write("wait")
 def generate_text(prompt):
     response = openai.Completion.create(
         engine="text-davinci-002",
@@ -16,4 +17,4 @@ def generate_text(prompt):
 
 prompt = "Translate the following English text to French: '"
 generated_text = generate_text(prompt)
-print(generated_text)
+st.write(generated_text)
