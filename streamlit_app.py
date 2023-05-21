@@ -11,7 +11,7 @@ def generate_text(prompt):
         prompt=prompt,
         max_tokens=1000,  # 调整此数值以生成不同长度的文本
         n=1,
-        temperature=1,
+        temperature=0.8,
     )
     return response.choices[0].text.strip()
 
