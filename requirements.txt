@@ -2,3 +2,4 @@ streamlit-aggrid
 streamlit==1.5.0
 click==8
 openai
+transformers
